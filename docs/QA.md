@@ -366,7 +366,8 @@ match the other panel titles; a focus ring no longer changes the corner shape of
 the text caret, checkboxes and scrollbars take the palette; the colours used by the charts and the day band now come
 from one file (`lib/palette.ts`) that a unit test keeps equal to the CSS tokens; and the example is computed once
 instead of three times. No wording of results, number or behaviour changed. Unit tests: 57 passing. Browser suite on
-the local build: 252 tests, 239 passed, 13 skipped by design, 0 failed. Screenshots retaken.
+the local build and on the deployed site (commit `3dc81f4`): 252 tests, 239 passed, 13 skipped by design, 0 failed,
+in both runs. Screenshots retaken.
 
 Known and left as is: there is no dark theme; chart text is a fixed 11 to 12 px and does not grow with the browser's
 text-size setting; the "Setback" wordmark on the landing page is larger than a usual display size on wide screens, on
