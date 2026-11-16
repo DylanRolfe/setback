@@ -3,6 +3,7 @@
 // Keyboard-accessible editor for a 5+2 thermostat schedule. No dragging: every
 // time block is a time input, a number input and a Remove button.
 
+import { hexToRgb, PALETTE } from "@/lib/palette";
 import { useEffect, useId, useRef, useState } from "react";
 import {
   formatClock,
@@ -122,9 +123,9 @@ const clock = (min: number) => (min >= MIN_PER_DAY ? "24:00" : formatClock(min))
  *  cold blue for lower ones. Decorative: the text summary beside it says the same thing. */
 export function DayBand({ segments }: { segments: DaySegment[] }) {
   // Diverging scale around 19.5 °C: cold blue at 17 °C and below, amber at 22 °C and above.
-  const cold = [143, 193, 227];
-  const neutral = [244, 241, 234];
-  const warm = [255, 184, 102];
+  const cold = hexToRgb(PALETTE.bandCold);
+  const neutral = hexToRgb(PALETTE.bandNeutral);
+  const warm = hexToRgb(PALETTE.bandWarm);
   const fill = (c: number) => {
     const t = Math.min(1, Math.max(-1, (c - 19.5) / 2.5));
     const end = t < 0 ? cold : warm;
@@ -145,7 +146,7 @@ export function DayBand({ segments }: { segments: DaySegment[] }) {
               width={`${width}%`}
               height="44"
               fill={fill(s.setpointC)}
-              stroke="#ffffff"
+              stroke={PALETTE.paper}
               strokeWidth="2"
             />
             {width >= 11 ? (
@@ -155,7 +156,7 @@ export function DayBand({ segments }: { segments: DaySegment[] }) {
                 textAnchor="middle"
                 fontSize="16"
                 fontWeight="700"
-                fill="#17252f"
+                fill={PALETTE.slate}
               >
                 {fmtSetpoint(s.setpointC)}°
               </text>
@@ -170,7 +171,7 @@ export function DayBand({ segments }: { segments: DaySegment[] }) {
             x2={`${(h / 24) * 100}%`}
             y1="44"
             y2="50"
-            stroke="#5f7180"
+            stroke={PALETTE.borderStrong}
             strokeWidth="1"
           />
           <text
@@ -178,7 +179,7 @@ export function DayBand({ segments }: { segments: DaySegment[] }) {
             y="63"
             textAnchor={h === 0 ? "start" : h === 24 ? "end" : "middle"}
             fontSize="12"
-            fill="#4a5a67"
+            fill={PALETTE.muted}
           >
             {String(h).padStart(2, "0")}:00
           </text>
@@ -298,7 +299,7 @@ function DayEditor({ legend, kind, periods, otherLastC, onChange }: DayEditorPro
 
   return (
     <fieldset className="card">
-      <legend className="float-left mb-3 w-full text-lg font-semibold">{legend}</legend>
+      <legend className="panel-title float-left mb-3 w-full">{legend}</legend>
       <ol className="clear-both grid gap-3">
         {rows.map((row, i) => {
           const err = row.revealed ? errors[i] : { time: null, temp: null };
@@ -307,7 +308,7 @@ function DayEditor({ legend, kind, periods, otherLastC, onChange }: DayEditorPro
           return (
             <li
               key={i}
-              className="rounded-md border border-line bg-bg p-3"
+              className="rounded bg-bg p-3"
               onBlur={(e) => {
                 if (!e.currentTarget.contains(e.relatedTarget as Node | null)) leaveRow();
               }}

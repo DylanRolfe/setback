@@ -5,12 +5,11 @@
 // the static weather file for the chosen city.
 
 import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
-import { formatClock12, type SchedulePeriod } from "@/lib/sim";
+import { formatClock12, type SchedulePeriod, type Suggestion, type WeatherSeason } from "@/lib/sim";
 import {
   cityById,
   DEFAULT_CITY_ID,
   defaultScenario,
-  exampleScenario,
   runScenario,
   suggestForScenario,
   type Scenario,
@@ -93,6 +92,19 @@ const exampleCityName = cityById(DEFAULT_CITY_ID).name.split(",")[0];
 /** A weekday of the example's starting schedule, for the picture on the landing page. */
 const exampleBefore: SchedulePeriod[] = defaultScenario().before.weekday;
 
+/** The example scenario and its suggestion, worked out once per weather file. */
+const examples = new WeakMap<WeatherSeason, { scenario: Scenario; suggestion: Suggestion }>();
+
+function exampleFor(weather: WeatherSeason) {
+  const cached = examples.get(weather);
+  if (cached) return cached;
+  const base = defaultScenario();
+  const suggestion = suggestForScenario(base, weather);
+  const made = { scenario: { ...base, after: suggestion.schedule }, suggestion };
+  examples.set(weather, made);
+  return made;
+}
+
 const periodsInWords = (periods: SchedulePeriod[]) =>
   periods.length === 1
     ? `${fmtSetpoint(periods[0].setpointC)} °C all day`
@@ -115,7 +127,7 @@ export default function SetbackApp() {
     let live = true;
     loadWeather(DEFAULT_CITY_ID).then(
       (exampleWeather) => {
-        if (live) setExampleAfter(exampleScenario(exampleWeather).after.weekday);
+        if (live) setExampleAfter(exampleFor(exampleWeather).scenario.after.weekday);
       },
       () => {
         // The picture stays empty. The example button reports the error when it is pressed.
@@ -211,14 +223,13 @@ export default function SetbackApp() {
     setExampleStatus("loading");
     try {
       const exampleWeather = await loadWeather(DEFAULT_CITY_ID);
-      const example = exampleScenario(exampleWeather);
-      const suggestion = suggestForScenario(example, exampleWeather);
+      const { scenario: example, suggestion } = exampleFor(exampleWeather);
       // If an earlier download failed, let the weather hook pick up the copy that just loaded.
       if (weatherState.status === "error") weatherState.retry();
       window.history.pushState({ setbackView: "results" }, "");
       dispatch({
         type: "load",
-        scenario: { ...example, after: suggestion.schedule },
+        scenario: example,
         suggestion: { ...suggestion, basis: suggestBasis(example), comfortMinC: example.comfortMinC },
       });
       setExampleStatus("idle");

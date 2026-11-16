@@ -50,7 +50,7 @@ export function NowStep({ scenario, update, go }: NowStepProps) {
         </div>
 
         <fieldset className="card">
-          <legend className="float-left mb-3 w-full text-lg font-semibold">Weekday routine (Mon to Fri)</legend>
+          <legend className="panel-title float-left mb-3 w-full">Weekday routine (Mon to Fri)</legend>
           <div className="clear-both grid gap-4 sm:grid-cols-2">
             <TimeField
               label="Wake-up time"
@@ -95,7 +95,7 @@ export function NowStep({ scenario, update, go }: NowStepProps) {
         </fieldset>
 
         <fieldset className="card">
-          <legend className="float-left mb-3 w-full text-lg font-semibold">Weekend routine (Sat and Sun)</legend>
+          <legend className="panel-title float-left mb-3 w-full">Weekend routine (Sat and Sun)</legend>
           <div className="clear-both grid gap-4 sm:grid-cols-2">
             <TimeField
               label="Wake-up time"

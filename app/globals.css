@@ -36,6 +36,16 @@
   --warn-border: var(--ember);
   --error: #b91c1c;
   --focus: var(--slate);
+  --error-bg: #fef2f2;
+  --on-dark: #ffffff;
+  --on-dark-muted: #c6d3dd;
+
+  /* Charts and the day band. Mirrored in lib/palette.ts (a test keeps them equal). */
+  --chart-grid: #dde4ea;
+  --chart-axis: #93a1ad;
+  --band-cold: #8fc1e3;
+  --band-neutral: #f4f1ea;
+  --band-warm: #ffb866;
 
   --font-body: var(--font-archivo), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
     Arial, sans-serif;
@@ -70,6 +80,14 @@
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     scroll-behavior: auto;
+    caret-color: var(--primary);
+    accent-color: var(--primary);
+    scrollbar-color: var(--border-strong) transparent;
+  }
+
+  ::selection {
+    background: var(--lamp);
+    color: var(--slate);
   }
 
   body {
@@ -104,8 +122,9 @@
   }
 
   /* Keep running text to a readable measure, also inside wide panels. */
-  main p,
-  main li {
+  main p:not(.callout, .equation),
+  main li:not(.card),
+  main figcaption {
     max-width: 74ch;
   }
 
@@ -124,11 +143,15 @@
   :focus-visible {
     outline: 3px solid var(--focus);
     outline-offset: 2px;
-    border-radius: 2px;
   }
 
   /* The step heading takes focus after a step change. It is not a control, so its
      ring is lighter than the ring on buttons and fields. */
+  h2[tabindex="-1"] {
+    width: fit-content;
+    max-width: 100%;
+  }
+
   h2[tabindex="-1"]:focus {
     outline: 2px solid var(--border-strong);
     outline-offset: 6px;
@@ -187,7 +210,7 @@
     top: -6rem;
     z-index: 50;
     background: var(--slate);
-    color: #ffffff;
+    color: var(--on-dark);
     padding: 0.75rem 1rem;
     border-radius: 0.25rem;
     font-weight: 600;
@@ -241,8 +264,11 @@
     -webkit-print-color-adjust: exact;
   }
 
+  /* Same total height as a day band (44 px band + 26 px of hour marks), so nothing
+     moves when the band arrives. */
   .dayband-empty {
     height: 44px;
+    margin-bottom: 26px;
     border: 1px dashed var(--border-strong);
     border-radius: 2px;
   }
@@ -266,10 +292,17 @@
     }
   }
 
+  .panel-title {
+    font-variation-settings: var(--condensed);
+    font-size: 1.45rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
   /* The one dark panel: the headline result, like the lit display of a thermostat. */
   .display {
     background: var(--slate);
-    color: #ffffff;
+    color: var(--on-dark);
     border-radius: 0.625rem;
     padding: 1.25rem;
   }
@@ -281,7 +314,7 @@
   }
 
   .display .muted {
-    color: #c6d3dd;
+    color: var(--on-dark-muted);
   }
 
   .headline {
@@ -330,7 +363,7 @@
   .btn-primary {
     background: var(--primary);
     border-color: var(--primary);
-    color: #ffffff;
+    color: var(--on-dark);
   }
 
   .btn-primary:hover {
@@ -442,8 +475,7 @@
   }
 
   .callout {
-    border: 1px solid var(--border);
-    border-left: 4px solid var(--border-strong);
+    border: 1.5px solid var(--border-strong);
     border-radius: 0.25rem;
     background: var(--surface);
     padding: 0.75rem 1rem;
@@ -456,15 +488,17 @@
 
   .callout-error {
     border-color: var(--error);
-    background: #fef2f2;
+    background: var(--error-bg);
   }
 
+  /* A quoted source: set in the condensed width, a step larger, with no side bar. */
   blockquote.quote {
-    border-left: 4px solid var(--slate);
-    padding: 0.25rem 0 0.25rem 1rem;
-    margin: 0.5rem 0;
-    font-size: 1.1rem;
-    font-weight: 500;
+    max-width: 34em;
+    margin: 0.5rem 0 0.75rem;
+    font-variation-settings: var(--condensed);
+    font-size: 1.45rem;
+    font-weight: 600;
+    line-height: 1.2;
   }
 
   /* Tables */
@@ -536,22 +570,21 @@
     display: none;
   }
 
+  /* Plus and minus marks, drawn as two bars. */
   .details > summary::before {
-    content: "+";
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    content: "";
+    flex: none;
     width: 1.5rem;
     height: 1.5rem;
     border: 1.5px solid currentColor;
     border-radius: 0.1875rem;
-    font-weight: 700;
-    line-height: 1;
-    flex: none;
+    background:
+      linear-gradient(currentColor, currentColor) center / 0.75rem 2px no-repeat,
+      linear-gradient(currentColor, currentColor) center / 2px 0.75rem no-repeat;
   }
 
   .details[open] > summary::before {
-    content: "\2212";
+    background: linear-gradient(currentColor, currentColor) center / 0.75rem 2px no-repeat;
   }
 
   /* Step navigation: the four steps sit in one joined row, like the program
@@ -604,7 +637,7 @@
 
   .step-btn[aria-current] {
     background: var(--slate);
-    color: #ffffff;
+    color: var(--on-dark);
   }
 
   .step-btn[aria-current]:focus-visible {

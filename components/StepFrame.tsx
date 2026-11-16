@@ -18,10 +18,12 @@ interface StepFrameProps {
 export function StepFrame({ step, title, children, back, next }: StepFrameProps) {
   return (
     <section aria-labelledby="view-heading">
-      {step ? <p className="no-print muted mb-2 text-sm font-semibold">Step {step} of 4</p> : null}
-      <h2 id="view-heading" tabIndex={-1} className="no-print mb-4 scroll-mt-12">
-        {title}
-      </h2>
+      <div className="no-print mb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+        <h2 id="view-heading" tabIndex={-1} className="scroll-mt-12">
+          {title}
+        </h2>
+        {step ? <p className="muted text-sm font-semibold">Step {step} of 4</p> : null}
+      </div>
       <div className="grid gap-6">{children}</div>
       <div className="no-print mt-8 flex flex-wrap justify-between gap-3 border-t border-line pt-6">
         {back ? (

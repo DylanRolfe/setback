@@ -68,7 +68,7 @@ export function ActionCard({ scenario, run }: { scenario: Scenario; run: Scenari
         Enter these start times and temperatures in your thermostat. Each temperature holds until the next start
         time.
       </p>
-      <div className="mt-4 grid gap-6 sm:grid-cols-2">
+      <div className="mt-4 grid gap-x-10 gap-y-6 sm:grid-cols-2">
         <PeriodList title="Weekdays (Mon to Fri)" periods={scenario.after.weekday} />
         <PeriodList title="Weekend (Sat, Sun)" periods={scenario.after.weekend} />
       </div>

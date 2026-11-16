@@ -4,6 +4,7 @@
 // heat delivered. Series differ by line style as well as colour. Each chart has a
 // computed text summary, and the hourly values are available as a real table.
 
+import { PALETTE } from "@/lib/palette";
 import { useId, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 import {
   coldestWeekIndex,
@@ -20,13 +21,13 @@ import {
 import { fmtInt, fmtNum, fmtSetpoint, fmtTemp } from "./format";
 
 const COLOR = {
-  before: "#b8400a",
-  after: "#0b5a8a",
-  outdoor: "#4a5a67",
-  grid: "#dde4ea",
-  axis: "#93a1ad",
-  text: "#17252f",
-  muted: "#4a5a67",
+  before: PALETTE.ember,
+  after: PALETTE.blue,
+  outdoor: PALETTE.muted,
+  grid: PALETTE.chartGrid,
+  axis: PALETTE.chartAxis,
+  text: PALETTE.slate,
+  muted: PALETTE.muted,
 };
 
 interface WeekData {

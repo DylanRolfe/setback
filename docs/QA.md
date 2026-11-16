@@ -357,6 +357,21 @@ wording, number or behaviour changed. The suite was run again on the local build
 <https://setback-mocha.vercel.app> (commit `b5726bb`): 252 tests, 239 passed, 13 skipped by design, 0 failed, in both runs. That run includes the axe-core contrast checks, the 320 px layout checks, the
 keyboard pass and the check that no request goes to another origin. The screenshots in `docs/screenshots/` were retaken.
 
+### Design audit and polish (Nov 16)
+
+A code-level design audit followed the restyle and its findings were fixed in the same pass: the "Step N of 4" label
+moved from above the step heading to beside it; callouts and quotes lost their coloured side bars; bordered boxes
+inside panels were removed; the plus and minus marks on disclosures are drawn instead of typed; form-panel titles
+match the other panel titles; a focus ring no longer changes the corner shape of the control it is on; text selection,
+the text caret, checkboxes and scrollbars take the palette; the colours used by the charts and the day band now come
+from one file (`lib/palette.ts`) that a unit test keeps equal to the CSS tokens; and the example is computed once
+instead of three times. No wording of results, number or behaviour changed. Unit tests: 57 passing. Browser suite on
+the local build: 252 tests, 239 passed, 13 skipped by design, 0 failed. Screenshots retaken.
+
+Known and left as is: there is no dark theme; chart text is a fixed 11 to 12 px and does not grow with the browser's
+text-size setting; the "Setback" wordmark on the landing page is larger than a usual display size on wide screens, on
+purpose.
+
 ### Still not tested
 
 Everything in section 7 except the deployed URL still stands: real phones, Safari, Firefox, screen readers, real

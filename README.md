@@ -129,7 +129,7 @@ Needs Node.js 20.9 or newer (built with Node 22).
 ```bash
 npm install          # install dependencies
 npm run dev          # start the dev server at http://localhost:3000
-npm test             # run the 54 unit tests for the simulation (Vitest)
+npm test             # run the 57 unit tests (Vitest)
 npm run build        # build the static site into out/
 npm run lint         # ESLint
 npm run typecheck    # TypeScript, no emit

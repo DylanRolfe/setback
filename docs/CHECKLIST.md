@@ -53,7 +53,7 @@ Status words: **Done** means it exists in the repo now. **Human step** means onl
 - [ ] The "Sanity check" section shows 1.4% against NRCan's "about 2 percent" and 3.3% against CMHC's 6.5%, both with the verdict "below".
 - [ ] "Scale it" with 40 shows 3,102 m³ of natural gas (about 3,100 in the documents) and 5,990 kg CO2e.
 - [ ] "Week to show" opens on "Week of Jan 26, 2026 (average -15.0 °C outside), coldest week".
-- [ ] `npm test` passes (54 unit tests) and, if you want to re-run the browser checks, `npm run qa` passes (252 tests, 13 skipped by design).
+- [ ] `npm test` passes (57 unit tests: 54 on the simulation, 3 on the colour palette) and, if you want to re-run the browser checks, `npm run qa` passes (252 tests, 13 skipped by design).
 - [ ] The button and section names in the app match the names used in `README.md`, `docs/VIDEO_SCRIPT.md` and `docs/SHOTLIST.md`. The names in the documents were checked against the code on Nov 15; check them once more on the live site while you rehearse the video.
 - [ ] No `VIDEO_URL_HERE` or `[DYLAN:` text is left in `README.md` or `docs/DEVPOST.md`.
 

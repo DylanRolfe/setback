@@ -73,7 +73,7 @@ export function PlaceStep({ scenario, update, weatherState, go }: PlaceStepProps
       </div>
 
       <fieldset className="card">
-        <legend className="float-left mb-3 w-full text-lg font-semibold">Home type</legend>
+        <legend className="panel-title float-left mb-3 w-full">Home type</legend>
         <div className="clear-both grid gap-3 sm:grid-cols-3">
           {HOME_PRESETS.map((home) => (
             <label key={home.id} className="choice">
@@ -160,7 +160,7 @@ export function PlaceStep({ scenario, update, weatherState, go }: PlaceStepProps
       </fieldset>
 
       <fieldset className="card">
-        <legend className="float-left mb-3 w-full text-lg font-semibold">Heating type</legend>
+        <legend className="panel-title float-left mb-3 w-full">Heating type</legend>
         <div className="clear-both grid gap-3 sm:grid-cols-3">
           {HEATING_OPTIONS.map((option) => (
             <label key={option.type} className="choice">

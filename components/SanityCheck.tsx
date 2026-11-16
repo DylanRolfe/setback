@@ -44,7 +44,7 @@ export function SanityCheck({ scenario, weather }: { scenario: Scenario; weather
       </p>
 
       {nrcan ? (
-        <div className="rounded-md border border-line p-4">
+        <div className="border-t border-line pt-4">
           <h4>Natural Resources Canada rule of thumb</h4>
           <blockquote className="quote">&ldquo;{NRCAN_GUIDANCE.setbackQuote}&rdquo;</blockquote>
           <p className="text-sm">
@@ -67,7 +67,7 @@ export function SanityCheck({ scenario, weather }: { scenario: Scenario; weather
       ) : null}
 
       {cmhc ? (
-        <div className="rounded-md border border-line p-4">
+        <div className="border-t border-line pt-4">
           <h4>Canada Mortgage and Housing Corporation test house</h4>
           <p className="mt-1 text-sm">
             Source: <SourceLink id="cmhc" />
