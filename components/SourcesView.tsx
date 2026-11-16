@@ -67,7 +67,8 @@ export function SourcesView({ scenario, weatherState, backTo, go }: SourcesViewP
       next={backTo === "results" ? undefined : { label: "Results", onClick: () => go("results") }}
     >
       <p>
-        Every number in this app is computed by the model, read from a public source, or labeled as an estimate.
+        Every number in this app is computed by the model, read from a public source, labeled as an estimate, or is a
+        setting of the model itself.
         Results are simulations under these assumptions, not measured savings. This page lists what the model uses
         for your current choices.
       </p>

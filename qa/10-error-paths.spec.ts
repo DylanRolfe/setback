@@ -31,9 +31,8 @@ test.describe("Extra: weather data failures", () => {
     await expect(headline(page)).toHaveCount(0);
   });
 
-  // DEF-04: after one failed download, a successful second try still shows the old error on Results.
+  // Regression test for DEF-04 (fixed): a successful second try must show Results, not the old error.
   test("example: after a failed download, trying again once the network is back shows Results", async ({ page }) => {
-    test.fail(true, "DEF-04: Results shows a stale weather error until Try again is pressed");
     await page.route(WEATHER, (route) => route.abort("failed"));
     await gotoLanding(page);
     await page.getByRole("button", { name: "Try the Waterloo example" }).click();
@@ -45,20 +44,6 @@ test.describe("Extra: weather data failures", () => {
     await page.getByRole("button", { name: "Try the Waterloo example" }).click();
     await expectView(page, "Results");
     await expect(headline(page)).toContainText("8.8%", { timeout: 4000 });
-  });
-
-  test("example: the Try again button on Results recovers from DEF-04", async ({ page }) => {
-    await page.route(WEATHER, (route) => route.abort("failed"));
-    await gotoLanding(page);
-    await page.getByRole("button", { name: "Try the Waterloo example" }).click();
-    await expect(
-      page.getByText("Error: the example weather data did not load. Check your connection and try again.")
-    ).toBeVisible();
-    await page.unroute(WEATHER);
-    await page.getByRole("button", { name: "Try the Waterloo example" }).click();
-    await expectView(page, "Results");
-    await page.getByRole("button", { name: "Try again" }).click();
-    await expectExampleResults(page);
   });
 
   test("manual path: error message with Try again on step 1, step 3 and Results; no numbers are invented", async ({ page }) => {
@@ -141,7 +126,6 @@ test.describe("Extra: share link housekeeping", () => {
 
   // DEF-03: the browser's own Back button is not wired to the steps.
   test("the browser Back button returns to the previous step", async ({ page }) => {
-    test.fail(true, "DEF-03: view changes are not in the browser history, so Back leaves the app");
     await gotoLanding(page);
     await page.getByRole("button", { name: "Start with my own place" }).click();
     await expectView(page, "Your place");

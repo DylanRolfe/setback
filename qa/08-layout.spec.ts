@@ -192,7 +192,8 @@ test.describe("9. Layout", () => {
     await openExample(page);
     await goToSources(page);
     const regions = page.getByRole("region", { name: /^Assumptions: / });
-    await expect(regions).toHaveCount(5);
+    // Weather, Your home, Heating system, Emissions, Schedules and routine, Suggested schedule, Sanity check.
+    await expect(regions).toHaveCount(7);
     for (const region of await regions.all()) {
       await expect(region).toHaveAttribute("tabindex", "0");
       const fits = await region.evaluate((el) => el.getBoundingClientRect().right <= document.documentElement.clientWidth + 0.5);

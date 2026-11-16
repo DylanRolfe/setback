@@ -16,6 +16,9 @@ import { DEFAULT_SUBSTEP_S } from "./model";
 import {
   cityById,
   DEADBAND_C,
+  DEFAULT_BEFORE_SETPOINT_C,
+  DEFAULT_COMFORT_MIN_C,
+  DEFAULT_ROUTINE,
   FURNACE_OPTIONS,
   HEAT_PUMP_COP_CURVE,
   HEATER_DESIGN_INDOOR_C,
@@ -27,13 +30,21 @@ import {
   SUGGEST_HOME_C,
   SUGGEST_SETBACK_DROP_C,
 } from "./presets";
-import { heaterCapacityW, Scenario } from "./scenario";
+import { CMHC_RANGE_PCT, heaterCapacityW, NRCAN_RANGE_PCT, Scenario } from "./scenario";
+import { describeRoutine, describeSchedule } from "./schedule";
 import { WeatherSeason } from "./types";
 
 export type AssumptionKind = "cited" | "calculated" | "estimate" | "your input" | "model setting";
 
 export interface AssumptionRow {
-  group: "Weather" | "Your home" | "Heating system" | "Emissions" | "Suggested schedule";
+  group:
+    | "Weather"
+    | "Your home"
+    | "Heating system"
+    | "Emissions"
+    | "Schedules and routine"
+    | "Suggested schedule"
+    | "Sanity check";
   label: string;
   /** Value with its unit, ready to display. */
   value: string;
@@ -188,6 +199,49 @@ export function listAssumptions(scenario: Scenario, weather: WeatherSeason): Ass
     });
   }
 
+  const beforeText = describeSchedule(scenario.before);
+  const beforeIsDefault = beforeText === `${DEFAULT_BEFORE_SETPOINT_C} °C all day, every day`;
+  const routineIsDefault = JSON.stringify(scenario.routine) === JSON.stringify(DEFAULT_ROUTINE);
+  const comfortIsDefault = scenario.comfortMinC === DEFAULT_COMFORT_MIN_C;
+  rows.push({
+    group: "Schedules and routine",
+    label: "Your schedule now (before)",
+    value: beforeText,
+    kind: beforeIsDefault ? "estimate" : "your input",
+    sourceIds: [],
+    note: beforeIsDefault
+      ? "The starting point this tool assumes until you change it in step 2: the same temperature all day. Every saving is measured against this."
+      : "You entered this in step 2. Every saving is measured against it.",
+  });
+  rows.push({
+    group: "Schedules and routine",
+    label: "Better schedule (after)",
+    value: describeSchedule(scenario.after),
+    kind: "your input",
+    sourceIds: [],
+    note: "Set in step 3, with the Suggest button or by hand.",
+  });
+  rows.push({
+    group: "Schedules and routine",
+    label: "Hours at home and awake",
+    value: describeRoutine(scenario.routine),
+    kind: routineIsDefault ? "estimate" : "your input",
+    sourceIds: [],
+    note: routineIsDefault
+      ? "Illustrative example, not a real user. Used for the comfort check and the suggested schedule. Change it in step 2."
+      : "You entered this in step 2. Used for the comfort check and the suggested schedule.",
+  });
+  rows.push({
+    group: "Schedules and routine",
+    label: "Comfort minimum while home and awake",
+    value: `${scenario.comfortMinC} °C`,
+    kind: comfortIsDefault ? "estimate" : "your input",
+    sourceIds: comfortIsDefault ? ["nrcanSmart"] : [],
+    note: comfortIsDefault
+      ? "Default, matching the 20 °C that NRCan suggests for when you are awake and at home. Change it in step 2."
+      : "You entered this in step 2.",
+  });
+
   rows.push({
     group: "Suggested schedule",
     label: "Temperatures",
@@ -203,6 +257,23 @@ export function listAssumptions(scenario: Scenario, weather: WeatherSeason): Ass
     kind: "model setting",
     sourceIds: [],
     note: `The shortest lead time for which the simulated room is below your comfort minimum for at most ${SUGGEST_COMFORT_SHARE * 100}% of the hours you are home and awake.`,
+  });
+
+  rows.push({
+    group: "Sanity check",
+    label: "Range counted as in line with NRCan's \"about 2 percent\"",
+    value: `${NRCAN_RANGE_PCT.low.toFixed(1)}% to ${NRCAN_RANGE_PCT.high.toFixed(1)}%`,
+    kind: "model setting",
+    sourceIds: ["keepingHeatIn"],
+    note: "Our reading of \"about 2\": the values that round to 2.",
+  });
+  rows.push({
+    group: "Sanity check",
+    label: "Range counted as in line with CMHC's 6.5%",
+    value: `${CMHC_RANGE_PCT.low.toFixed(1)}% to ${CMHC_RANGE_PCT.high.toFixed(1)}%`,
+    kind: "model setting",
+    sourceIds: ["cmhc"],
+    note: "Our reading. That figure is for one test house in Ottawa in a different winter, so it is context and not a pass or fail test.",
   });
 
   return rows;

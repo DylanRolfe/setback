@@ -178,3 +178,28 @@ export function parseClock(text: string): number | null {
   if (hh > 23 || mm > 59) return null;
   return hh * 60 + mm;
 }
+
+const fmtC = (c: number) => String(Math.round(c * 10) / 10);
+
+const describeDay = (periods: SchedulePeriod[]) =>
+  periods.map((p) => `${formatClock12(p.startMin)} ${fmtC(p.setpointC)} °C`).join(", ");
+
+/** One-line description of a schedule, for example "22 °C all day, every day". */
+export function describeSchedule(schedule: WeeklySchedule): string {
+  const { weekday, weekend } = schedule;
+  if (weekday.length === 1 && weekend.length === 1 && weekday[0].setpointC === weekend[0].setpointC) {
+    return `${fmtC(weekday[0].setpointC)} °C all day, every day`;
+  }
+  return `weekdays ${describeDay(weekday)}; weekends ${describeDay(weekend)}`;
+}
+
+/** One-line description of the home-and-awake routine. */
+export function describeRoutine(r: Routine): string {
+  const out = r.outOnWeekdays
+    ? `, out ${formatClock12(r.weekdayLeaveMin)} to ${formatClock12(r.weekdayReturnMin)}`
+    : ", home all day";
+  return (
+    `Weekdays: up ${formatClock12(r.weekdayWakeMin)}${out}, bed ${formatClock12(r.weekdaySleepMin)}. ` +
+    `Weekends: up ${formatClock12(r.weekendWakeMin)}, bed ${formatClock12(r.weekendSleepMin)}.`
+  );
+}

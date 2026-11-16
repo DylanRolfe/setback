@@ -79,7 +79,7 @@ test.describe("3. Honesty checks", () => {
     await openExample(page);
     for (const view of ["Results", "Sources and assumptions"] as const) {
       if (view === "Sources and assumptions") await goToSources(page);
-      const sanity = page.getByRole("region", { name: "Sanity check" });
+      const sanity = page.getByRole("region", { name: "Sanity check", exact: true });
       const quote = sanity.getByRole("blockquote");
       await expect(quote, `${view}: exactly one NRCan quote`).toHaveCount(1);
       const text = (await quote.innerText()).trim();
@@ -224,7 +224,6 @@ test.describe("3. Honesty checks", () => {
 
   // DEF-01: the cautions shown in step 3 are not repeated where the schedule is handed over.
   test("Results repeats the 17 °C warning next to a schedule that goes below 17 °C", async ({ page }) => {
-    test.fail(true, "DEF-01: Results and the printable action card drop the NRCan 17 °C warning");
     await openExample(page);
     await goToStep(page, 3);
     await weekdaysEditor(page).getByLabel("Temperature (°C), block 2").fill("15");

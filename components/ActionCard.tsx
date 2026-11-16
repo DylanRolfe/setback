@@ -10,6 +10,7 @@ import {
   type SchedulePeriod,
 } from "@/lib/sim";
 import { scenarioToHash } from "@/lib/share";
+import { ScheduleWarnings } from "./BetterStep";
 import { fmtSetpoint } from "./format";
 import { HeadlineSentence } from "./Headline";
 
@@ -68,6 +69,10 @@ export function ActionCard({ scenario, run }: { scenario: Scenario; run: Scenari
       <div className="mt-4 grid gap-6 sm:grid-cols-2">
         <PeriodList title="Weekdays (Mon to Fri)" periods={scenario.after.weekday} />
         <PeriodList title="Weekend (Sat, Sun)" periods={scenario.after.weekend} />
+      </div>
+
+      <div className="mt-4">
+        <ScheduleWarnings schedule={scenario.after} heating={scenario.heating} />
       </div>
 
       <div className="no-print mt-5 flex flex-wrap gap-3">

@@ -180,6 +180,11 @@ export function exampleScenario(weather: WeatherSeason): Scenario {
 
 export type Verdict = "below" | "inside" | "above";
 
+/** Range read as matching NRCan's "about 2 percent": the values that round to 2. Our reading. */
+export const NRCAN_RANGE_PCT = { low: 1.5, high: 2.5 } as const;
+/** Range read as matching CMHC's 6.5% for one test house. Our reading. */
+export const CMHC_RANGE_PCT = { low: 6.0, high: 7.0 } as const;
+
 export interface Benchmark {
   id: "nrcan" | "cmhc";
   /** What was simulated, in plain words. */
@@ -235,18 +240,18 @@ export function sanityCheck(scenario: Scenario, weather: WeatherSeason): Benchma
       description: `${base} °C all day versus ${base - 1} °C from 11 p.m. to 7 a.m. (1 °C lower for eight hours)`,
       modelPct: nrcanPct,
       publishedPct: NRCAN_GUIDANCE.setbackSavingPct,
-      rangeLowPct: 1.5,
-      rangeHighPct: 2.5,
-      verdict: verdictFor(nrcanPct, 1.5, 2.5),
+      rangeLowPct: NRCAN_RANGE_PCT.low,
+      rangeHighPct: NRCAN_RANGE_PCT.high,
+      verdict: verdictFor(nrcanPct, NRCAN_RANGE_PCT.low, NRCAN_RANGE_PCT.high),
     },
     {
       id: "cmhc",
       description: "22 °C all day versus 18 °C from 11 p.m. to 6 a.m.",
       modelPct: cmhcPct,
       publishedPct: CMHC_BENCHMARK.savingPct,
-      rangeLowPct: 6.0,
-      rangeHighPct: 7.0,
-      verdict: verdictFor(cmhcPct, 6.0, 7.0),
+      rangeLowPct: CMHC_RANGE_PCT.low,
+      rangeHighPct: CMHC_RANGE_PCT.high,
+      verdict: verdictFor(cmhcPct, CMHC_RANGE_PCT.low, CMHC_RANGE_PCT.high),
     },
   ];
 }

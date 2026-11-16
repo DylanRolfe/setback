@@ -79,7 +79,7 @@ function SuggestionNote({ s }: { s: StoredSuggestion }) {
         Suggested: {fmtSetpoint(s.homeC)} °C when you are home and awake, {fmtSetpoint(s.setbackC)} °C when you are
         asleep or out, and warm-up starts {s.preheatMin} minutes early
         {s.comfortMet
-          ? ` so the simulated room is back above your ${fmtSetpoint(s.comfortMinC)} °C minimum when you need it.`
+          ? `. With that warm-up the simulated room is below your ${fmtSetpoint(s.comfortMinC)} °C minimum for no more than 1% of the hours you are home and awake (${fmtHours(s.hoursBelowMin)} hours this season).`
           : "."}
       </p>
       {s.comfortMet ? null : (

@@ -12,6 +12,8 @@ import { fmtKg, fmtPct } from "./format";
 
 export type View = "landing" | "place" | "now" | "better" | "results" | "sources";
 
+export const VIEWS: View[] = ["landing", "place", "now", "better", "results", "sources"];
+
 export const STEPS: { view: View; label: string }[] = [
   { view: "place", label: "Your place" },
   { view: "now", label: "Your schedule now" },

@@ -7,6 +7,9 @@ import { HeatingType, Routine, SchedulePeriod, WeeklySchedule } from "./sim/type
 
 const HASH_KEY = "s";
 
+/** Largest "Scale it" value. The field in the app and the link decoder use the same limit. */
+export const MAX_UNITS = 10000;
+
 function toBase64Url(text: string): string {
   const bytes = new TextEncoder().encode(text);
   let binary = "";
@@ -132,7 +135,7 @@ export function decodeScenario(encoded: string): Scenario | null {
       comfortMinC: isNum(p.cf) ? clamp(p.cf, SETPOINT_MIN_C, SETPOINT_MAX_C) : base.comfortMinC,
       before,
       after,
-      units: isNum(p.n) ? clamp(Math.round(p.n), 1, 100000) : 1,
+      units: isNum(p.n) ? clamp(Math.round(p.n), 1, MAX_UNITS) : 1,
       priceCents: isNum(p.p) && p.p >= 0 ? clamp(p.p, 0, 1000) : null,
     };
   } catch {

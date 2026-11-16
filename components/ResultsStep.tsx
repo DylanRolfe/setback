@@ -13,6 +13,8 @@ import {
   type ScenarioRun,
   type WeatherSeason,
 } from "@/lib/sim";
+import { describeSchedule } from "@/lib/sim";
+import { MAX_UNITS } from "@/lib/share";
 import { ActionCard } from "./ActionCard";
 import { NumberField } from "./fields";
 import { CO2e, ExtLink, fmtHours, fmtInt, fmtKg, fmtMoney, fmtNum, fmtPct, fmtSetpoint, fmtTemp } from "./format";
@@ -278,7 +280,8 @@ function WhyItWorks({ run }: { run: ScenarioRun }) {
       <p>
         In this simulation the average gap goes from {fmtTemp(gapBefore)} °C to {fmtTemp(gapAfter)} °C, and the heat
         lost over the season goes from {fmtInt(run.before.balance.heatLostKWh)} kWh to{" "}
-        {fmtInt(run.after.balance.heatLostKWh)} kWh.
+        {fmtInt(run.after.balance.heatLostKWh)} kWh. Each number is rounded on its own, so the gap can differ by 0.1 °C
+        from the difference of the two temperatures shown.
       </p>
     </div>
   );
@@ -294,7 +297,7 @@ function ScaleIt({ scenario, run, update }: { scenario: Scenario; run: ScenarioR
         label="How many homes like this?"
         value={n}
         min={1}
-        max={10000}
+        max={MAX_UNITS}
         step={1}
         integer
         inputClassName="max-w-[10rem]"
@@ -378,7 +381,8 @@ export function ResultsStep({ scenario, update, weatherState, outcome, go }: Res
         </p>
         <p className="muted mt-3">
           Simulated for one home ({home.label.toLowerCase()}) in {city.name}, over one heating season (
-          {weather.seasonLabel}). This is a simulation, not a measurement of your home.
+          {weather.seasonLabel}). Compared with your schedule now: {describeSchedule(scenario.before)}. This is a
+          simulation, not a measurement of your home.
         </p>
         <button type="button" className="btn mt-3" onClick={() => go("sources")}>
           See the assumptions

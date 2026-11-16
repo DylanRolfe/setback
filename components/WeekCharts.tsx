@@ -204,11 +204,13 @@ function DayLabels({ frame, y, data, dayStarts }: { frame: Frame; y: number; dat
 function LegendItem({
   color,
   dashed,
+  dotted,
   thin,
   children,
 }: {
   color: string;
   dashed?: boolean;
+  dotted?: boolean;
   thin?: boolean;
   children: ReactNode;
 }) {
@@ -219,7 +221,7 @@ function LegendItem({
         className="legend-line"
         style={{
           borderTopColor: color,
-          borderTopStyle: dashed ? "dashed" : "solid",
+          borderTopStyle: dotted ? "dotted" : dashed ? "dashed" : "solid",
           borderTopWidth: thin ? 2 : 3,
         }}
       />
@@ -313,6 +315,9 @@ export function WeekCharts({ weather, run, comfortMinC, heaterKW, heaterIsEstima
           <LegendItem color={COLOR.outdoor} thin>
             Outside (thin grey)
           </LegendItem>
+          <LegendItem color={COLOR.text} thin dotted>
+            Your minimum, {fmtSetpoint(comfortMinC)} °C (dotted)
+          </LegendItem>
         </ul>
         <div ref={ref}>
           <svg
@@ -345,18 +350,6 @@ export function WeekCharts({ weather, run, comfortMinC, heaterKW, heaterIsEstima
                     strokeWidth="1"
                     strokeDasharray="1 4"
                   />
-                  <text
-                    x={width - frame.right - 4}
-                    y={y(comfortMinC) + 13}
-                    fontSize="11"
-                    textAnchor="end"
-                    fill={COLOR.text}
-                    stroke="#ffffff"
-                    strokeWidth="3"
-                    paintOrder="stroke"
-                  >
-                    your minimum, {fmtSetpoint(comfortMinC)} °C
-                  </text>
                   <path
                     d={linePath(data.inBefore, frame, y)}
                     fill="none"

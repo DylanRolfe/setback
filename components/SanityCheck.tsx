@@ -61,7 +61,7 @@ export function SanityCheck({ scenario, weather }: { scenario: Scenario; weather
           <p className="mt-3">
             <strong>Verdict:</strong> Our model gives {fmtPct(nrcan.modelPct)}%, which is{" "}
             {VERDICT_WORDS[nrcan.verdict]} NRCan&rsquo;s &ldquo;about {fmtNum(nrcan.publishedPct)} percent&rdquo;. We
-            count {fmtNum(nrcan.rangeLowPct, 1)}% to {fmtNum(nrcan.rangeHighPct, 1)}% as in line with it.
+            count {fmtNum(nrcan.rangeLowPct, 1)}% to {fmtNum(nrcan.rangeHighPct, 1)}% as in line with it. That range is our own reading of &ldquo;about 2&rdquo;.
           </p>
         </div>
       ) : null}

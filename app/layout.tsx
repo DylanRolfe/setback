@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { SkipLink } from "@/components/SkipLink";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,9 +19,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <a className="skip-link" href="#main">
-          Skip to main content
-        </a>
+        <SkipLink />
         {children}
       </body>
     </html>

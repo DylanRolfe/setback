@@ -234,11 +234,10 @@ test.describe("5. Share link", () => {
 
   // DEF-09: the share link accepts more homes than the "Scale it" field allows.
   test("a link cannot carry more homes than the Scale it field accepts (10,000)", async ({ page }) => {
-    test.fail(true, "DEF-09: the link decoder clamps homes to 100,000 while the field's limit is 10,000");
     await page.goto(`/#s=${b64url({ ...EXAMPLE_PACKED, n: 1e9 })}`);
     await expectView(page, "Results");
     const homes = scaleSection(page).getByLabel("How many homes like this?");
-    await expect(homes).toHaveValue(/^d+$/);
+    await expect(homes).toHaveValue(/^\d+$/);
     expect(Number(await homes.inputValue())).toBeLessThanOrEqual(10000);
   });
 

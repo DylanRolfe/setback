@@ -143,7 +143,6 @@ test.describe("8. Keyboard-only pass", () => {
 
   // DEF-02: activating the skip link on Results replaces the share link in the address bar.
   test("using the skip link on Results keeps the share link in the address bar", async ({ page }, testInfo) => {
-    test.fail(true, "DEF-02: the skip link replaces #s=... with #main, so a reload loses the scenario");
     const walk = new KeyboardWalk(page, testInfo);
     await gotoLanding(page);
     await walk.tabTo(page.getByRole("button", { name: "Try the Waterloo example" }), "Try the Waterloo example");

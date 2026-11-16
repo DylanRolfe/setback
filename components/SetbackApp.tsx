@@ -26,6 +26,7 @@ import {
   headlineText,
   STEPS,
   suggestBasis,
+  VIEWS,
   type RunOutcome,
   type StoredSuggestion,
   type View,
@@ -98,7 +99,12 @@ export default function SetbackApp() {
   const [suggestError, setSuggestError] = useState<string | null>(null);
   const [announced, setAnnounced] = useState("");
 
-  const go = useCallback((next: View) => dispatch({ type: "go", view: next }), []);
+  // Each step is its own browser-history entry, so the browser Back button goes to the
+  // previous step instead of leaving the app. Edits are kept when stepping back.
+  const go = useCallback((next: View) => {
+    window.history.pushState({ setbackView: next }, "");
+    dispatch({ type: "go", view: next });
+  }, []);
   const update = useCallback((fn: (s: Scenario) => Scenario) => dispatch({ type: "update", fn }), []);
 
   // Results for the current scenario. Runs in the browser in a few milliseconds.
@@ -111,26 +117,51 @@ export default function SetbackApp() {
     }
   }, [started, scenario, weather]);
 
-  // Open a shared scenario from the link, now and whenever the hash changes.
+  // Open a shared scenario from the link on load, and follow the browser Back and
+  // Forward buttons afterwards.
   useEffect(() => {
-    const openFromHash = () => {
-      const shared = scenarioFromHash(window.location.hash);
-      if (shared) dispatch({ type: "load", scenario: shared, suggestion: null });
+    const ownView = (state: unknown): View | null => {
+      const value = (state as { setbackView?: unknown } | null)?.setbackView;
+      return typeof value === "string" && VIEWS.includes(value as View) ? (value as View) : null;
     };
-    openFromHash();
+    // A history entry without our marker is either the landing page or a share link
+    // that was just opened or pasted into the address bar.
+    const openUnmarked = (fallBackToLanding: boolean) => {
+      const shared = scenarioFromHash(window.location.hash);
+      if (shared) {
+        window.history.replaceState({ setbackView: "results" }, "");
+        dispatch({ type: "load", scenario: shared, suggestion: null });
+      } else if (fallBackToLanding) {
+        dispatch({ type: "go", view: "landing" });
+      }
+    };
+    const onPopState = (event: PopStateEvent) => {
+      const view = ownView(event.state);
+      if (view) dispatch({ type: "go", view });
+      else openUnmarked(true);
+    };
+    // Some browsers report a pasted link only as a hash change.
+    const onHashChange = () => {
+      if (!ownView(window.history.state)) openUnmarked(false);
+    };
+    openUnmarked(false);
     trackPointer();
-    window.addEventListener("hashchange", openFromHash);
-    return () => window.removeEventListener("hashchange", openFromHash);
+    window.addEventListener("popstate", onPopState);
+    window.addEventListener("hashchange", onHashChange);
+    return () => {
+      window.removeEventListener("popstate", onPopState);
+      window.removeEventListener("hashchange", onHashChange);
+    };
   }, []);
 
   // Keep the share link in the address bar in step with the scenario.
   useEffect(() => {
-    if (!started) return;
+    if (!started || view === "landing") return;
     const timer = window.setTimeout(() => {
-      window.history.replaceState(null, "", scenarioToHash(scenario));
+      window.history.replaceState(window.history.state, "", scenarioToHash(scenario));
     }, 300);
     return () => window.clearTimeout(timer);
-  }, [started, scenario]);
+  }, [started, scenario, view, moves]);
 
   // After a view change, move focus to the new heading and bring it into view.
   useEffect(() => {
@@ -155,6 +186,9 @@ export default function SetbackApp() {
       const exampleWeather = await loadWeather(DEFAULT_CITY_ID);
       const example = exampleScenario(exampleWeather);
       const suggestion = suggestForScenario(example, exampleWeather);
+      // If an earlier download failed, let the weather hook pick up the copy that just loaded.
+      if (weatherState.status === "error") weatherState.retry();
+      window.history.pushState({ setbackView: "results" }, "");
       dispatch({
         type: "load",
         scenario: { ...example, after: suggestion.schedule },
