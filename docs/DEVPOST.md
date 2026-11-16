@@ -1,14 +1,14 @@
 # Setback: Devpost text
 
-Notes for Dylan (do not paste this block): replace `LIVE_URL_HERE`, `REPO_URL_HERE` and `VIDEO_URL_HERE` first. Fill or delete every `[DYLAN: ...]` slot. Tick the CONFIRM BEFORE SUBMITTING list at the bottom. The "Submission fields" go into their own Devpost boxes. Everything from "Inspiration" down goes into the project story. The story is about 1,500 words because every input and source of the example is listed. If you want it shorter, cut "Challenges", "What we learned" and "What's next" first. Do not cut "Expected environmental benefit", "Limitations" or "AI assistance disclosure".
+Notes for Dylan (do not paste this block): the live and repo addresses are filled in; replace `VIDEO_URL_HERE` after you upload the video. Fill or delete every `[DYLAN: ...]` slot. Tick the CONFIRM BEFORE SUBMITTING list at the bottom. The "Submission fields" go into their own Devpost boxes. Everything from "Inspiration" down goes into the project story. The story is about 1,500 words because every input and source of the example is listed. If you want it shorter, cut "Challenges", "What we learned" and "What's next" first. Do not cut "Expected environmental benefit", "Limitations" or "AI assistance disclosure".
 
 ## Submission fields
 
 - **Project name:** Setback
 - **Tagline (110 characters):** See how much heating energy and CO2e your thermostat schedule wastes, and get a better one to program tonight.
 - **Built with:** next.js, react, typescript, tailwindcss, vitest, playwright, axe-core, svg, vercel, open-meteo
-- **Try it out:** LIVE_URL_HERE
-- **Source code:** REPO_URL_HERE
+- **Try it out:** https://setback-mocha.vercel.app
+- **Source code:** https://github.com/DylanRolfe/setback
 - **Demo video:** VIDEO_URL_HERE
 - **Team:** Dylan Rolfe (solo). First-year Mechatronics Engineering student, University of Waterloo, Ontario, Canada.
 
@@ -44,7 +44,7 @@ A renter or student in a cold Canadian city who controls a thermostat. No accoun
 - **Model:** a single-zone thermal model, `C * dT/dt = Q_heat - UA * (T - T_out)`, with an on/off thermostat, run in 60-second steps over 5,088 hours of weather. Each step uses the exact solution of the equation, so energy balances to rounding error.
 - **Data:** hourly temperatures for five Canadian cities, downloaded once at build time. Emission factors from Canada's National Inventory Report.
 - **App:** a static site. The simulation runs in the browser. No backend, database, LLM, analytics, cookies or runtime API calls.
-- **Tests:** 54 unit tests on the simulation, including the example below.
+- **Tests:** 54 unit tests on the simulation, including the example below, and 252 browser checks (Playwright and axe-core) on desktop, phone and 320 px widths, run on the live site. The first QA pass found ten minor defects; all are fixed and listed in `docs/QA.md`.
 
 ## Expected environmental benefit
 

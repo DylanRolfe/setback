@@ -1,6 +1,6 @@
 # Setback: shot list for the demo video
 
-Seven shots, one continuous screen recording of the live app at LIVE_URL_HERE. Total about 2 minutes 50 seconds. The words to say are in `docs/VIDEO_SCRIPT.md`. The caption numbers refer to `docs/captions.srt`.
+Seven shots, one continuous screen recording of the live app at https://setback-mocha.vercel.app. Total about 2 minutes 50 seconds. The words to say are in `docs/VIDEO_SCRIPT.md`. The caption numbers refer to `docs/captions.srt`.
 
 ## Browser setup (do this before recording)
 
@@ -9,7 +9,7 @@ Seven shots, one continuous screen recording of the live app at LIVE_URL_HERE. T
 - Browser zoom 110% to 125%, so the numbers are readable on a small video player. Check that the "Before and after" table still fits without sideways scrolling.
 - Hide the bookmarks bar (Ctrl+Shift+B in Chrome or Edge).
 - Close notifications and chat apps. Turn on Do Not Disturb.
-- Load LIVE_URL_HERE with nothing after the address (no `#s=...`), so the landing page shows.
+- Load https://setback-mocha.vercel.app with nothing after the address (no `#s=...`), so the landing page shows.
 - Do a silent practice run first. Check that every number in the "Point at" column appears exactly. If one does not, stop and fix the documents before recording.
 - Record the voice in a quiet room. Leave about one second of silence between shots for scrolling.
 
@@ -36,13 +36,13 @@ The app keeps the whole scenario after `#s=` in the address and opens "4 Results
 Example with 1 home (shots 2, 3, 4, 6, 7):
 
 ```
-LIVE_URL_HERE/#s=eyJ2IjoxLCJjIjoid2F0ZXJsb28iLCJoIjoiYXBhcnRtZW50IiwidWEiOjgwLCJjbSI6MTEuNiwiaGsiOm51bGwsImh0IjoiZ2FzIiwiZmUiOjk1LCJyIjpbNDIwLDEzODAsMSw1MTAsMTA1MCw1NDAsMTQxMF0sImNmIjoyMCwiYiI6W1tbMCwyMl1dLFtbMCwyMl1dXSwiYSI6W1tbMzAwLDIxXSxbNTEwLDE4XSxbOTMwLDIxXSxbMTM4MCwxOF1dLFtbNDIwLDIxXSxbMTQxMCwxOF1dXSwibiI6MSwicCI6bnVsbH0
+https://setback-mocha.vercel.app/#s=eyJ2IjoxLCJjIjoid2F0ZXJsb28iLCJoIjoiYXBhcnRtZW50IiwidWEiOjgwLCJjbSI6MTEuNiwiaGsiOm51bGwsImh0IjoiZ2FzIiwiZmUiOjk1LCJyIjpbNDIwLDEzODAsMSw1MTAsMTA1MCw1NDAsMTQxMF0sImNmIjoyMCwiYiI6W1tbMCwyMl1dLFtbMCwyMl1dXSwiYSI6W1tbMzAwLDIxXSxbNTEwLDE4XSxbOTMwLDIxXSxbMTM4MCwxOF1dLFtbNDIwLDIxXSxbMTQxMCwxOF1dXSwibiI6MSwicCI6bnVsbH0
 ```
 
 Same example with 40 homes already entered (shot 5):
 
 ```
-LIVE_URL_HERE/#s=eyJ2IjoxLCJjIjoid2F0ZXJsb28iLCJoIjoiYXBhcnRtZW50IiwidWEiOjgwLCJjbSI6MTEuNiwiaGsiOm51bGwsImh0IjoiZ2FzIiwiZmUiOjk1LCJyIjpbNDIwLDEzODAsMSw1MTAsMTA1MCw1NDAsMTQxMF0sImNmIjoyMCwiYiI6W1tbMCwyMl1dLFtbMCwyMl1dXSwiYSI6W1tbMzAwLDIxXSxbNTEwLDE4XSxbOTMwLDIxXSxbMTM4MCwxOF1dLFtbNDIwLDIxXSxbMTQxMCwxOF1dXSwibiI6NDAsInAiOm51bGx9
+https://setback-mocha.vercel.app/#s=eyJ2IjoxLCJjIjoid2F0ZXJsb28iLCJoIjoiYXBhcnRtZW50IiwidWEiOjgwLCJjbSI6MTEuNiwiaGsiOm51bGwsImh0IjoiZ2FzIiwiZmUiOjk1LCJyIjpbNDIwLDEzODAsMSw1MTAsMTA1MCw1NDAsMTQxMF0sImNmIjoyMCwiYiI6W1tbMCwyMl1dLFtbMCwyMl1dXSwiYSI6W1tbMzAwLDIxXSxbNTEwLDE4XSxbOTMwLDIxXSxbMTM4MCwxOF1dLFtbNDIwLDIxXSxbMTQxMCwxOF1dXSwibiI6NDAsInAiOm51bGx9
 ```
 
 ## After recording

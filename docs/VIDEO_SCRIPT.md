@@ -7,7 +7,7 @@ Notes for Dylan:
 - The SAY lines below match `docs/captions.srt` word for word. If you change a word here, change it in the captions too.
 - Every number you say is from the documented example in `docs/SOURCES.md` (sections 7 and 8) or from the weather file. Do not round them differently or add new ones.
 - Say "CO2e" as "C O two E". Say "8.8" as "eight point eight".
-- Record the screen on the live app at LIVE_URL_HERE. Browser setup and the exact state for each shot are in `docs/SHOTLIST.md`.
+- Record the screen on the live app at https://setback-mocha.vercel.app. Browser setup and the exact state for each shot are in `docs/SHOTLIST.md`.
 - The shots follow the order of the "4 Results" page from top to bottom, so you only ever scroll down.
 
 Each shot has two parts: ON SCREEN (what to click and show) and SAY (the exact words).
@@ -16,7 +16,7 @@ Each shot has two parts: ON SCREEN (what to click and show) and SAY (the exact w
 
 ## Shot 1. Landing (0:00 to 0:15)
 
-**ON SCREEN:** The landing page at LIVE_URL_HERE, with the heading "Setback" and the sentence "See exactly how much energy and CO2e your heating schedule wastes, and get a better one to program tonight." Rest the mouse near the button "Try the Waterloo example". Do not click yet.
+**ON SCREEN:** The landing page at https://setback-mocha.vercel.app, with the heading "Setback" and the sentence "See exactly how much energy and CO2e your heating schedule wastes, and get a better one to program tonight." Rest the mouse near the button "Try the Waterloo example". Do not click yet.
 
 **SAY:**
 

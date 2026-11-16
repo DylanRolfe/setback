@@ -2,9 +2,9 @@
 
 Setback is a small web app that shows how much heating energy and CO2e a thermostat schedule wastes, and suggests a better schedule you can program tonight. You pick a city, a home type and a heating type, enter the schedule you use now, and compare it with a setback schedule over one real heating season of hourly weather. Every result is a simulation under stated assumptions, with every constant cited or labeled as an estimate.
 
-- Live app: LIVE_URL_HERE
+- Live app: https://setback-mocha.vercel.app
 - Demo video: VIDEO_URL_HERE
-- Source code: REPO_URL_HERE
+- Source code: https://github.com/DylanRolfe/setback
 - Built for [Green Shift Hacks](https://green-shift-hacks.devpost.com/) by Dylan Rolfe (solo entry).
 
 ## Screenshots
@@ -17,7 +17,7 @@ Setback is a small web app that shows how much heating energy and CO2e a thermos
 
 ## Use it in 30 seconds
 
-1. Open LIVE_URL_HERE and click **Try the Waterloo example**. (Or click **Start with my own place** and fill in steps 1 to 3.)
+1. Open https://setback-mocha.vercel.app and click **Try the Waterloo example**. (Or click **Start with my own place** and fill in steps 1 to 3.)
 2. Read the headline in **4 Results**: "This schedule cuts your simulated heating energy by X% (about Y kg CO2e this season) under these assumptions."
 3. Scroll down: "Before and after", "Comfort check", "One week, hour by hour" (it opens on the coldest week), "Why this works", "Sanity check" and "Scale it".
 4. Go to **Program this tonight**. Print the card or copy the share link. The link holds all your inputs in the URL. Nothing is sent to a server.
@@ -134,7 +134,10 @@ npm run build        # build the static site into out/
 npm run lint         # ESLint
 npm run typecheck    # TypeScript, no emit
 npm run fetch-weather  # optional: re-download the five weather files from Open-Meteo
+npm run qa           # optional: 252 browser checks (Playwright + axe-core) on the built site; first run `npx playwright install chromium`
 ```
+
+The browser checks and what they found are written up in [docs/QA.md](docs/QA.md). To run them against the live site: `BASE_URL=https://setback-mocha.vercel.app npm run qa`.
 
 The build is a static export. There is no backend, no database, no LLM, no analytics, no cookies and no runtime API call. Weather is downloaded once at build time and shipped as static JSON in `public/data/`. You can host the `out/` folder on any static file host.
 
