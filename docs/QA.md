@@ -353,8 +353,8 @@ those results now hold for the production site and not only for the local build.
 
 After the re-test above, the app was restyled (new colours, the Archivo typeface served from the site's own files, a
 24-hour temperature band on the landing page and on the action card, a dark panel for the headline result). No
-wording, number or behaviour changed. The suite was run again on the local build of the restyled app: 252 tests, 239
-passed, 13 skipped by design, 0 failed. That run includes the axe-core contrast checks, the 320 px layout checks, the
+wording, number or behaviour changed. The suite was run again on the local build of the restyled app and on the deployed site
+<https://setback-mocha.vercel.app> (commit `b5726bb`): 252 tests, 239 passed, 13 skipped by design, 0 failed, in both runs. That run includes the axe-core contrast checks, the 320 px layout checks, the
 keyboard pass and the check that no request goes to another origin. The screenshots in `docs/screenshots/` were retaken.
 
 ### Still not tested
