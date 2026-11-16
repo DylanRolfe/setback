@@ -12,12 +12,14 @@ import {
 import { scenarioToHash } from "@/lib/share";
 import { ScheduleWarnings } from "./BetterStep";
 import { fmtSetpoint } from "./format";
+import { DayBand, daySegments } from "./ScheduleEditor";
 import { HeadlineSentence } from "./Headline";
 
 function PeriodList({ title, periods }: { title: string; periods: SchedulePeriod[] }) {
   return (
     <div>
       <h4>{title}</h4>
+      <DayBand segments={daySegments(periods)} />
       <ul className="num mt-1 grid gap-1">
         {periods.map((p) => (
           <li key={p.startMin}>

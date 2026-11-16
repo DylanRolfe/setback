@@ -5,6 +5,7 @@
 // the static weather file for the chosen city.
 
 import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
+import { formatClock12, type SchedulePeriod } from "@/lib/sim";
 import {
   cityById,
   DEFAULT_CITY_ID,
@@ -16,11 +17,12 @@ import {
 } from "@/lib/sim";
 import { scenarioFromHash, scenarioToHash } from "@/lib/share";
 import { BetterStep } from "./BetterStep";
-import { CO2e, ExtLink } from "./format";
+import { CO2e, ExtLink, fmtSetpoint } from "./format";
 import { NowStep } from "./NowStep";
 import { PlaceStep } from "./PlaceStep";
 import { trackPointer } from "./pointer";
 import { ResultsStep } from "./ResultsStep";
+import { DayBand, daySegments } from "./ScheduleEditor";
 import {
   errorMessage,
   headlineText,
@@ -88,6 +90,14 @@ function reducer(state: AppState, action: Action): AppState {
 
 const exampleCityName = cityById(DEFAULT_CITY_ID).name.split(",")[0];
 
+/** A weekday of the example's starting schedule, for the picture on the landing page. */
+const exampleBefore: SchedulePeriod[] = defaultScenario().before.weekday;
+
+const periodsInWords = (periods: SchedulePeriod[]) =>
+  periods.length === 1
+    ? `${fmtSetpoint(periods[0].setpointC)} °C all day`
+    : periods.map((p) => `${formatClock12(p.startMin)} ${fmtSetpoint(p.setpointC)} °C`).join(", ");
+
 export default function SetbackApp() {
   const [state, dispatch] = useReducer(reducer, undefined, initialState);
   const { scenario, view, started, moves } = state;
@@ -98,6 +108,23 @@ export default function SetbackApp() {
   const [exampleStatus, setExampleStatus] = useState<"idle" | "loading" | "error">("idle");
   const [suggestError, setSuggestError] = useState<string | null>(null);
   const [announced, setAnnounced] = useState("");
+  // The better weekday shown on the landing page: the schedule the example button loads.
+  const [exampleAfter, setExampleAfter] = useState<SchedulePeriod[] | null>(null);
+
+  useEffect(() => {
+    let live = true;
+    loadWeather(DEFAULT_CITY_ID).then(
+      (exampleWeather) => {
+        if (live) setExampleAfter(exampleScenario(exampleWeather).after.weekday);
+      },
+      () => {
+        // The picture stays empty. The example button reports the error when it is pressed.
+      }
+    );
+    return () => {
+      live = false;
+    };
+  }, []);
 
   // Each step is its own browser-history entry, so the browser Back button goes to the
   // previous step instead of leaving the app. Edits are kept when stepping back.
@@ -219,7 +246,7 @@ export default function SetbackApp() {
       {view === "landing" ? null : (
         <header className="site-header border-b border-line bg-surface">
           <div className="wrap flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-3">
-            <h1 className="text-2xl font-bold tracking-tight text-primary">Setback</h1>
+            <h1 className="wordmark-small">Setback</h1>
             <p className="muted text-sm">
               Heating schedule simulator. Energy and <CO2e />, before and after.
             </p>
@@ -230,7 +257,7 @@ export default function SetbackApp() {
       {view === "landing" ? null : (
         <nav aria-label="Steps" className="site-nav border-b border-line bg-bg">
           <div className="wrap grid gap-2 py-3">
-            <ol className="grid grid-cols-2 gap-2 md:grid-cols-4">
+            <ol className="step-row">
               {STEPS.map((step, i) => (
                 <li key={step.view}>
                   <button
@@ -253,7 +280,7 @@ export default function SetbackApp() {
             <div>
               <button
                 type="button"
-                className="step-btn md:w-auto"
+                className="step-btn step-btn-plain"
                 aria-current={view === "sources" ? "page" : undefined}
                 onClick={() => go("sources")}
               >
@@ -266,9 +293,9 @@ export default function SetbackApp() {
 
       <main id="main" tabIndex={-1} className="flex-1">
         {view === "landing" ? (
-          <div className="wrap py-12 sm:py-20">
-            <h1 className="text-5xl font-bold tracking-tight text-primary sm:text-7xl">Setback</h1>
-            <p className="mt-5 max-w-3xl text-2xl leading-snug sm:text-3xl">
+          <div className="wrap py-10 sm:py-16">
+            <h1 className="wordmark">Setback</h1>
+            <p className="hero-line mt-6">
               See exactly how much energy and <CO2e /> your heating schedule wastes, and get a better one to program
               tonight.
             </p>
@@ -293,7 +320,28 @@ export default function SetbackApp() {
             </p>
             <p className="mt-4 text-lg font-semibold">No login. No tracking. Runs in your browser.</p>
 
-            <div className="mt-12 grid gap-6 border-t border-line pt-8 md:grid-cols-2">
+            <figure className="mt-12 grid gap-5">
+              <div>
+                <p className="band-label">One temperature all day</p>
+                <DayBand segments={daySegments(exampleBefore)} />
+              </div>
+              <div>
+                <p className="band-label">Lower while you sleep and while you are out</p>
+                {exampleAfter ? (
+                  <DayBand segments={daySegments(exampleAfter)} />
+                ) : (
+                  <div className="dayband-empty mt-2" aria-hidden="true" />
+                )}
+              </div>
+              <figcaption className="muted">
+                A weekday in the {exampleCityName} example. Now: {periodsInWords(exampleBefore)}.
+                {exampleAfter ? ` Better: ${periodsInWords(exampleAfter)}.` : ""} The example button works out what
+                the second line saves over one heating season. The routine behind it is an illustrative example, not
+                a real user.
+              </figcaption>
+            </figure>
+
+            <div className="mt-12 grid gap-8 border-t border-line-strong pt-8 md:grid-cols-2">
               <div>
                 <h2 className="text-xl">What it does</h2>
                 <ol className="mt-3 grid list-decimal gap-2 pl-5">

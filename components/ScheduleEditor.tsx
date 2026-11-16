@@ -118,39 +118,44 @@ export function daySegments(periods: SchedulePeriod[]): DaySegment[] {
 
 const clock = (min: number) => (min >= MIN_PER_DAY ? "24:00" : formatClock(min));
 
-function DayBar({ segments }: { segments: DaySegment[] }) {
-  const cool = [231, 229, 228];
-  const warm = [251, 191, 119];
+/** The 24 hours of a day as a band of temperature: warm amber for higher settings,
+ *  cold blue for lower ones. Decorative: the text summary beside it says the same thing. */
+export function DayBand({ segments }: { segments: DaySegment[] }) {
+  // Diverging scale around 19.5 °C: cold blue at 17 °C and below, amber at 22 °C and above.
+  const cold = [143, 193, 227];
+  const neutral = [244, 241, 234];
+  const warm = [255, 184, 102];
   const fill = (c: number) => {
-    const t = Math.min(1, Math.max(0, (c - 15) / 8));
-    const mix = cool.map((v, i) => Math.round(v + (warm[i] - v) * t));
+    const t = Math.min(1, Math.max(-1, (c - 19.5) / 2.5));
+    const end = t < 0 ? cold : warm;
+    const mix = neutral.map((v, i) => Math.round(v + (end[i] - v) * Math.abs(t)));
     return `rgb(${mix[0]}, ${mix[1]}, ${mix[2]})`;
   };
   const pct = (min: number) => (min / MIN_PER_DAY) * 100;
   const ticks = [0, 6, 12, 18, 24];
   return (
-    <svg aria-hidden="true" focusable="false" width="100%" height="58" className="mt-2 block">
+    <svg aria-hidden="true" focusable="false" width="100%" height="70" className="dayband mt-2">
       {segments.map((s) => {
         const width = pct(s.endMin - s.startMin);
         return (
           <g key={s.startMin}>
             <rect
               x={`${pct(s.startMin)}%`}
-              y="1"
+              y="0"
               width={`${width}%`}
-              height="32"
+              height="44"
               fill={fill(s.setpointC)}
-              stroke="#57534e"
-              strokeWidth="1"
+              stroke="#ffffff"
+              strokeWidth="2"
             />
             {width >= 11 ? (
               <text
                 x={`${pct(s.startMin) + width / 2}%`}
-                y="22"
+                y="29"
                 textAnchor="middle"
-                fontSize="13"
-                fontWeight="600"
-                fill="#1c1917"
+                fontSize="16"
+                fontWeight="700"
+                fill="#17252f"
               >
                 {fmtSetpoint(s.setpointC)}°
               </text>
@@ -159,16 +164,25 @@ function DayBar({ segments }: { segments: DaySegment[] }) {
         );
       })}
       {ticks.map((h) => (
-        <text
-          key={h}
-          x={`${(h / 24) * 100}%`}
-          y="52"
-          textAnchor={h === 0 ? "start" : h === 24 ? "end" : "middle"}
-          fontSize="12"
-          fill="#57534e"
-        >
-          {String(h).padStart(2, "0")}:00
-        </text>
+        <g key={h}>
+          <line
+            x1={`${(h / 24) * 100}%`}
+            x2={`${(h / 24) * 100}%`}
+            y1="44"
+            y2="50"
+            stroke="#5f7180"
+            strokeWidth="1"
+          />
+          <text
+            x={`${(h / 24) * 100}%`}
+            y="63"
+            textAnchor={h === 0 ? "start" : h === 24 ? "end" : "middle"}
+            fontSize="12"
+            fill="#4a5a67"
+          >
+            {String(h).padStart(2, "0")}:00
+          </text>
+        </g>
       ))}
     </svg>
   );
@@ -396,7 +410,7 @@ function DayEditor({ legend, kind, periods, otherLastC, onChange }: DayEditorPro
             last {kind === "weekday" ? "weekend" : "weekday"} temperature ({fmtSetpoint(otherLastC)} °C) instead.
           </p>
         ) : null}
-        <DayBar segments={segments} />
+        <DayBand segments={segments} />
       </div>
     </fieldset>
   );

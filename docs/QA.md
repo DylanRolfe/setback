@@ -349,6 +349,14 @@ narrow 320×640. The 13 skips are by design (keyboard tests run on desktop only;
 desktop). The deployed run includes the console, network and third-party-request checks and the axe-core scans, so
 those results now hold for the production site and not only for the local build.
 
+### Visual restyle (Nov 16)
+
+After the re-test above, the app was restyled (new colours, the Archivo typeface served from the site's own files, a
+24-hour temperature band on the landing page and on the action card, a dark panel for the headline result). No
+wording, number or behaviour changed. The suite was run again on the local build of the restyled app: 252 tests, 239
+passed, 13 skipped by design, 0 failed. That run includes the axe-core contrast checks, the 320 px layout checks, the
+keyboard pass and the check that no request goes to another origin. The screenshots in `docs/screenshots/` were retaken.
+
 ### Still not tested
 
 Everything in section 7 except the deployed URL still stands: real phones, Safari, Firefox, screen readers, real

@@ -376,15 +376,17 @@ export function ResultsStep({ scenario, update, weatherState, outcome, go }: Res
   return (
     <StepFrame step={4} title="Results" {...nav}>
       <div className="no-print">
-        <p className="headline">
-          <HeadlineSentence run={run} emphasis />
-        </p>
-        <p className="muted mt-3">
+        <div className="display">
+          <p className="headline">
+            <HeadlineSentence run={run} emphasis />
+          </p>
+          <p className="muted mt-4">
           Simulated for one home ({home.label.toLowerCase()}) in {city.name}, over one heating season (
           {weather.seasonLabel}). Compared with your schedule now: {describeSchedule(scenario.before)}. This is a
           simulation, not a measurement of your home.
-        </p>
-        <button type="button" className="btn mt-3" onClick={() => go("sources")}>
+          </p>
+        </div>
+        <button type="button" className="btn mt-4" onClick={() => go("sources")}>
           See the assumptions
         </button>
         {unchanged ? (

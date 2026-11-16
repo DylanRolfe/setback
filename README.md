@@ -213,7 +213,8 @@ CONFIRM BEFORE SUBMITTING (Dylan: tick only what is true, delete what is not, th
 - Guidance quotes: Natural Resources Canada. Test-house figure: Canada Mortgage and Housing Corporation.
 - Energy price pointers: Ontario Energy Board.
 - Thermal mass class values: Lawrence Berkeley National Laboratory, Modelica Buildings Library.
-- Open-source tools: Next.js (started from `create-next-app`), React, TypeScript, Tailwind CSS, Vitest, ESLint.
+- Typeface: [Archivo](https://github.com/Omnibus-Type/Archivo) by Omnibus-Type, SIL Open Font License 1.1. It is downloaded when the site is built and served from the site's own files, so the browser never contacts a font service.
+- Open-source tools: Next.js (started from `create-next-app`), React, TypeScript, Tailwind CSS, Vitest, Playwright, axe-core, ESLint.
 
 ## Licence
 

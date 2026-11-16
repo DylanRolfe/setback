@@ -20,13 +20,13 @@ import {
 import { fmtInt, fmtNum, fmtSetpoint, fmtTemp } from "./format";
 
 const COLOR = {
-  before: "#b45309",
-  after: "#0f766e",
-  outdoor: "#57534e",
-  grid: "#e7e5e4",
-  axis: "#a8a29e",
-  text: "#1c1917",
-  muted: "#57534e",
+  before: "#b8400a",
+  after: "#0b5a8a",
+  outdoor: "#4a5a67",
+  grid: "#dde4ea",
+  axis: "#93a1ad",
+  text: "#17252f",
+  muted: "#4a5a67",
 };
 
 interface WeekData {

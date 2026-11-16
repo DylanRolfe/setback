@@ -83,7 +83,7 @@ The model lands **below both**. The likely reasons: it leaves out free heat from
 
 ## Tools and data
 
-- **Tools:** Next.js 16, React 19, TypeScript, Tailwind CSS 4, Vitest, hand-written SVG charts, Playwright and axe-core for checks, Vercel. Started from the open-source `create-next-app` template.
+- **Tools:** Next.js 16, React 19, TypeScript, Tailwind CSS 4, Vitest, hand-written SVG charts, Playwright and axe-core for checks, Vercel. Started from the open-source `create-next-app` template. Typeface: Archivo by Omnibus-Type (SIL Open Font License), served from the site itself.
 - **Data:** Weather data by [Open-Meteo.com](https://open-meteo.com/) (CC BY 4.0). Emission factors and statistics from Environment and Climate Change Canada and Natural Resources Canada (contains information licensed under the [Open Government Licence – Canada](https://open.canada.ca/en/open-government-licence-canada)). Guidance and comparison figures from Natural Resources Canada and CMHC, with credit. Price pointers: Ontario Energy Board.
 - **Licences:** code is MIT, weather files are CC BY 4.0. Only public data with terms that permit reuse is used. No personal data is collected.
 
