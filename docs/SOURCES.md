@@ -161,8 +161,8 @@ result. For the default Waterloo example (apartment preset, gas furnace):
 2. A single thermal mass makes the room cool down slowly (time constant 25 to 40 hours for the presets), so the room
    spends less of the night at the lower temperature than a real room whose air cools faster than its structure.
 
-Both effects make Setback's percentage **lean low**. We chose not to tune the model up to match, because that would mean
-adding assumptions we cannot cite. Across the five cities the NRCan case gives 1.3% to 2.0% for the apartment preset
+Both effects make Setback's percentage **lean low**. The model was not tuned up to match, because that would mean
+adding assumptions that cannot be cited. Across the five cities the NRCan case gives 1.3% to 2.0% for the apartment preset
 with a gas furnace (inside NRCan's range only for Vancouver). The CMHC figure is for one house, one city and one winter,
 so it is context rather than a pass/fail test.
 

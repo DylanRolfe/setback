@@ -8,7 +8,6 @@ import {
   Routine,
   SimInput,
   SimInputError,
-  WeatherSeason,
   WeeklySchedule,
 } from "../types";
 

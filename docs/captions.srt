@@ -1,0 +1,168 @@
+1
+00:00:00,500 --> 00:00:04,333
+We are often told to turn the heat down,
+
+2
+00:00:04,413 --> 00:00:08,681
+but rarely when, by how
+much, or what it saves.
+
+3
+00:00:08,761 --> 00:00:15,203
+Setback works that out for one home and
+gives you a schedule to set tonight.
+
+4
+00:00:16,083 --> 00:00:18,611
+I click Try the Waterloo example.
+
+5
+00:00:19,491 --> 00:00:23,324
+It is an illustrative
+example, not a real user:
+
+6
+00:00:23,404 --> 00:00:28,977
+a Waterloo apartment with a gas
+furnace, at 22 degrees all day.
+
+7
+00:00:29,057 --> 00:00:35,933
+The suggested schedule: 21 degrees when
+home and awake, 18 when asleep or out.
+
+8
+00:00:36,013 --> 00:00:40,281
+The result: simulated heating
+energy falls 8.8 percent,
+
+9
+00:00:40,361 --> 00:00:45,933
+about 150 kilograms of CO2e this
+season, under these assumptions.
+
+10
+00:00:46,013 --> 00:00:51,585
+Gas use falls from 879
+to 801 cubic metres.
+
+11
+00:00:51,665 --> 00:00:57,672
+That is 78 cubic metres not burned,
+for one apartment, in one season.
+
+12
+00:00:58,552 --> 00:01:02,385
+Comfort check: the room
+is below 20 degrees
+
+13
+00:01:02,465 --> 00:01:07,603
+for 6.9 of the 1,934 home-and-awake hours.
+
+14
+00:01:08,483 --> 00:01:15,359
+This is the coldest week, the week of
+January 26, averaging minus 15 outside.
+
+15
+00:01:15,439 --> 00:01:20,142
+At night the indoor temperature
+drifts down toward 18 degrees
+
+16
+00:01:20,222 --> 00:01:24,055
+and the heating power
+is off while it falls.
+
+17
+00:01:24,135 --> 00:01:28,403
+A cooler room loses less
+heat. That is the saving.
+
+18
+00:01:29,283 --> 00:01:35,290
+Now the honest part. Natural Resources
+Canada's rule of thumb is about 2 percent
+
+19
+00:01:35,370 --> 00:01:39,203
+for a drop of 1 degree over eight hours.
+
+20
+00:01:39,283 --> 00:01:42,246
+My model gives 1.4 percent.
+
+21
+00:01:42,326 --> 00:01:47,463
+It lands below that, and below
+a CMHC test house figure too,
+
+22
+00:01:47,543 --> 00:01:49,637
+so this estimate leans low.
+
+23
+00:01:49,717 --> 00:01:53,116
+I report that instead of tuning the model.
+
+24
+00:01:53,996 --> 00:01:58,263
+In Scale it, I enter 40 homes like this.
+
+25
+00:01:58,343 --> 00:02:03,046
+That is about 3,100 cubic metres of gas
+
+26
+00:02:03,126 --> 00:02:08,263
+and about 5,990 kilograms
+of CO2e per season.
+
+27
+00:02:08,343 --> 00:02:11,307
+That is straight multiplication,
+assuming identical homes.
+
+28
+00:02:12,187 --> 00:02:16,890
+The card, Program this tonight, lists
+the exact times and temperatures.
+
+29
+00:02:16,970 --> 00:02:20,803
+I can print it or copy a share link.
+
+30
+00:02:20,883 --> 00:02:24,716
+The link holds every
+input. There is no backend.
+
+31
+00:02:25,596 --> 00:02:28,994
+Sources and assumptions lists
+every constant, its source,
+
+32
+00:02:29,074 --> 00:02:31,168
+and which values are estimates.
+
+33
+00:02:31,248 --> 00:02:35,516
+The limits: this is a simulation,
+not a measured saving,
+
+34
+00:02:35,596 --> 00:02:40,733
+from a single-zone model with estimated
+home values and one past winter.
+
+35
+00:02:40,813 --> 00:02:47,690
+I built Setback with an AI coding
+agent, Claude Fable 5.2 in Claude Code,
+
+36
+00:02:47,770 --> 00:02:51,168
+and the README lists
+what I decided myself.

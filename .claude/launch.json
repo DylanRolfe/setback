@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "setback-static",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["qa/serve-out.mjs", "4310"],
+      "port": 4310
+    }
+  ]
+}
